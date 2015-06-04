@@ -16,7 +16,7 @@
 
 (defn setup []
   ; Set frame rate to 30 frames per second.
-  (q/frame-rate 10000)
+  (q/frame-rate 30)
   ; Set color mode to HSB (HSV) instead of default RGB.
   (q/color-mode :hsb)
   ; setup function returns initial state. It contains
@@ -25,7 +25,8 @@
    :points [[0 0]]})
 
 (defn update-state [state]
-  (update-in state [:points 0] s-is))
+  (let [updated-points (take 1000 (iterate s-is (last (:points state))))]
+    (assoc state :points updated-points)))
 
 (defn draw-state [state]
     (doseq [[x y] (map scale-up (:points state))]
