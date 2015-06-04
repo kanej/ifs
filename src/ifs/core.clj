@@ -25,12 +25,14 @@
    :points [[0 0]]})
 
 (defn update-state [state]
-  (let [updated-points (take 1000 (iterate s-is (last (:points state))))]
-    (assoc state :points updated-points)))
+  (let [updated-points (take 1000 (iterate s-is (last (:points state))))
+        updated-colour (mod (+ (:color state) 0.7) 255)]
+    (assoc state :points updated-points :color updated-colour)))
 
 (defn draw-state [state]
-    (doseq [[x y] (map scale-up (:points state))]
-      (q/point x y)))
+  (q/stroke (:color state) 255 255)
+  (doseq [[x y] (map scale-up (:points state))]
+    (q/point x y)))
 
 (q/defsketch dejong
   :title "IFS"
