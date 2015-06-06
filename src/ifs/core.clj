@@ -21,7 +21,7 @@
     [(+ (q/sin (* a y)) (* c (q/cos (* a x))))
      (+ (q/sin (* b x)) (* d (q/cos (* b y))))]))
 
-(def scale-factor 200)
+(def scale-factor 1)
 
 (defn scale-up [[x y]]
   [(* scale-factor x) (* scale-factor y)])
@@ -45,6 +45,7 @@
       (assoc state :points updated-points :color updated-colour))))
 
 (defn draw-state [state]
+  (q/smooth 20)
   (q/stroke (:color state) 255 255)
   (q/with-translation [(/ (q/width) 2)
                        (/ (q/height) 2)]
