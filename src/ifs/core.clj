@@ -21,7 +21,7 @@
     [(+ (q/sin (* a y)) (* c (q/cos (* a x))))
      (+ (q/sin (* b x)) (* d (q/cos (* b y))))]))
 
-(def scale-factor 1)
+(def scale-factor 200)
 
 (defn scale-up [[x y]]
   [(* scale-factor x) (* scale-factor y)])
@@ -84,9 +84,12 @@
 ;;(sketch-ifs (clifford-is -1.4 1.6 1.0 0.7))
 ;;(sketch-ifs (clifford-is 1.6 -0.6 -1.2 1.6))
 ;;(sketch-ifs (clifford-is 1.7 1.7 0.6 1.2))
-(sketch-ifs (clifford-is 1.5 -1.8 1.6 0.9))
+;;;(sketch-ifs (clifford-is 1.5 -1.8 1.6 0.9))
 ;;(sketch-ifs (clifford-is -1.7 1.3 -0.1 -1.2))
 ;;(sketch-ifs (clifford-is -1.7 1.8 -1.9 -0.4))
 ;;(sketch-ifs (clifford-is -1.8 -2.0 -0.5 -0.9))
+
+;; Me
+(sketch-ifs (clifford-is -1.945 2.0 -0.5 -0.9))
 
 ;;(sketch-ifs s-is)
