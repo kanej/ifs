@@ -46,7 +46,7 @@
 
 (defn draw-state [state]
   (q/smooth 20)
-  (q/stroke (:color state) 255 255)
+  (q/stroke (:color state) 255 255 5)
   (q/with-translation [(/ (q/width) 2)
                        (/ (q/height) 2)]
     (doseq [[x y] (map scale-up (:points state))]
