@@ -36,8 +36,6 @@
   {:color 0
    :points [[0 0]]})
 
-
-
 (defn update-state* [ifs]
   (fn [state]
     (let [updated-points (take 1000 (iterate ifs (last (:points state))))
@@ -51,8 +49,6 @@
                        (/ (q/height) 2)]
     (doseq [[x y] (map scale-up (:points state))]
       (q/point x y))))
-
-
 
 (defn sketch-ifs [ifs]
   (q/defsketch dejong
