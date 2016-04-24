@@ -31,6 +31,7 @@
   (q/frame-rate 30)
   ; Set color mode to HSB (HSV) instead of default RGB.
   (q/color-mode :hsb)
+  (q/background 255)
   ; setup function returns initial state. It contains
   ; circle color and position.
   {:color 0
@@ -44,7 +45,7 @@
 
 (defn draw-state [state]
   (q/smooth 20)
-  (q/stroke (:color state) 255 255 5)
+  (q/stroke (:color state) 255 255 100)
   (q/with-translation [(/ (q/width) 2)
                        (/ (q/height) 2)]
     (doseq [[x y] (map scale-up (:points state))]
@@ -83,9 +84,9 @@
 ;;;(sketch-ifs (clifford-is 1.5 -1.8 1.6 0.9))
 ;;(sketch-ifs (clifford-is -1.7 1.3 -0.1 -1.2))
 ;;(sketch-ifs (clifford-is -1.7 1.8 -1.9 -0.4))
-;;(sketch-ifs (clifford-is -1.8 -2.0 -0.5 -0.9))
+(sketch-ifs (clifford-is -1.8 -2.0 -0.5 -0.9))
 
 ;; Me
-(sketch-ifs (clifford-is -1.945 2.0 -0.5 -0.9))
+;;(sketch-ifs (clifford-is -1.945 2.0 -0.5 -0.9))
 
 ;;(sketch-ifs s-is)
