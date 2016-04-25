@@ -44,7 +44,7 @@
       (assoc state :points updated-points :color updated-colour))))
 
 (defn draw-state [state]
-  (q/smooth 20)
+  ;;(q/smooth 0)
   (q/stroke (:color state) 255 255 100)
   (q/with-translation [(/ (q/width) 2)
                        (/ (q/height) 2)]
@@ -54,7 +54,7 @@
 (defn sketch-ifs [ifs]
   (q/defsketch dejong
     :title "IFS"
-    :size [1000 1000]
+    :size [1024 1024]
     ; setup function called only once, during sketch initialization.
     :setup setup
     ; update-state is called on each iteration before draw-state.
