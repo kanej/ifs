@@ -1,4 +1,5 @@
 (ns ifs.frame
+  (:require [clojure.core.matrix :as mat])
   (:import (javax.swing JFrame JLabel)
            (java.awt Graphics Dimension Color)
            (java.awt.image BufferedImage)))
@@ -20,14 +21,27 @@
       (.show))
     {:frame frame :canvas canvas :graphics graphics :size size}))
 
-
 (defn scale [factor [x y]]
   [(* factor x) (* factor y)])
 
 (defn transform [x-move y-move [x y]]
   [(+ x-move x) (+ y-move y)])
 
-(defn draw [{frame :frame canvas :canvas graphics :graphics} data]
+(defn calculate-colour [freq]
+  (if (> freq 0)
+    (Color. 200 200 200)
+    (Color. 0 0 0)))
+
+(defn draw-matrix [{frame :frame canvas :canvas graphics :graphics} matrix]
+  (let [size (count matrix)]
+    (doseq [y (range size)
+            x (range size)]
+      (let [point-freq (mat/mget matrix x y)]
+        (draw-point x y (calculate-colour point-freq) graphics)))
+    (.repaint canvas)
+    (.show frame)))
+
+(defn draw [{frame :frame canvas :canvas graphics :graphics :as panel} data]
   (do
     (doseq [point data]
       (let [[x y] (->> point (scale 200) (transform 512 512))]

@@ -12,6 +12,7 @@
    [clojure.test :as test]
    [clojure.tools.namespace.repl :refer [refresh refresh-all]]
    [clojure.java.io :as io]
+   [clojure.core.matrix :as mat]
    [ifs.frame :as f]
    [ifs.systems :as s])
   (:import (java.awt.image BufferedImage)
@@ -20,21 +21,35 @@
            (java.io File)))
 
 
-(defn draw-image [data]
-  (let [img (BufferedImage. 1024 1024 BufferedImage/TYPE_INT_ARGB)]
-    (doto
-      ;;(.getGraphics img)
-      (.setRGB img Color/BLUE)
-      ;;(.fillRect 0 0 100 100)
-      )
-    (ImageIO/write img "png" (File. "test.png"))))
-
 (defn dejong [iterations]
   (let [ifs (s/dejong-is 0.97 -1.9 1.38 -1.5)]
     (take iterations (iterate ifs [0 0]))))
 
 (defn dd []
   (f/draw (f/create-panel 1024) (dejong 10000)))
+
+(defn point->co-ordinate [[x y]]
+  [(int x) (int y)])
+
+(defn update-matrix [matrix [x y :as point]]
+  (if (or (< x 0) (>= x 1024) (< y 0) (>= y 1024))
+    matrix
+    (update-in matrix (point->co-ordinate point) inc)))
+
+(defn populate-matrix [matrix points]
+  (loop [pts points m matrix]
+    (if (empty? pts)
+      m
+      (recur (rest pts) (update-matrix m (first pts))))))
+
+(defn build-matrix []
+  (->> (dejong 10000)
+       (map (partial f/scale 200))
+       (map (partial f/transform 512 512))
+       (populate-matrix (mat/new-matrix 1024 1024))))
+
+;;(populate-matrix (mat/new-matrix 10 10) (dejong 100))
+
 
 ;; De Jong
 
