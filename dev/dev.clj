@@ -29,17 +29,12 @@
       )
     (ImageIO/write img "png" (File. "test.png"))))
 
-(defn scale [factor [x y]]
-  [(* factor x) (* factor y)])
-
-(defn transform [x-move y-move [x y]]
-  [(+ x-move x) (+ y-move y)])
-
-(defn dejong []
+(defn dejong [iterations]
   (let [ifs (s/dejong-is 0.97 -1.9 1.38 -1.5)]
-    (take 12000000 (map (comp (partial transform 512 512) (partial scale 200)) (iterate ifs [0 0])))))
+    (take iterations (iterate ifs [0 0]))))
 
-(defn dd [] (f/draw (f/create-panel 1024) (dejong)))
+(defn dd []
+  (f/draw (f/create-panel 1024) (dejong 10000)))
 
 ;; De Jong
 
