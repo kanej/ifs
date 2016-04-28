@@ -14,12 +14,12 @@
    [clojure.java.io :as io]
    [clojure.core.matrix :as mat]
    [ifs.frame :as f]
-   [ifs.systems :as s])
+   [ifs.systems :as s]
+   [ifs.matrix :as m])
   (:import (java.awt.image BufferedImage)
            (javax.imageio ImageIO)
            (java.awt Color)
            (java.io File)))
-
 
 (defn dejong [iterations]
   (let [ifs (s/dejong-is 0.97 -1.9 1.38 -1.5)]
@@ -28,19 +28,6 @@
 (defn dd []
   (f/draw (f/create-panel 1024) (dejong 10000)))
 
-(defn point->co-ordinate [[x y]]
-  [(int x) (int y)])
-
-(defn update-matrix [matrix [x y :as point]]
-  (if (or (< x 0) (>= x 1024) (< y 0) (>= y 1024))
-    matrix
-    (update-in matrix (point->co-ordinate point) inc)))
-
-(defn populate-matrix [matrix points]
-  (loop [pts points m matrix]
-    (if (empty? pts)
-      m
-      (recur (rest pts) (update-matrix m (first pts))))))
 
 (defn build-matrix []
   (->> (dejong 10000)
